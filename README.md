@@ -8,7 +8,7 @@ The Ivanti Secure Connect Logs Parser is a PowerShell script designed to parse I
 It converts various strings to ease the analysis efforts and converts them into a readable CSV format.  
   
 For example, the original ".vc0" logs hold the epoch timestamp inside a UID string like:  
-- **"uid__1707603496_3777_1555"** which after converstion will show this date and time: "10/02/2024 22:18:16".
+- **"uid__1707603496_1234_1234"** which after converstion will show this date and time: "10/02/2024 22:18:16".
   
 And a message like:  
 - **"AUT24326"**  which stands for "Log Auth Success".
@@ -27,6 +27,25 @@ It then prompts the user to choose a log file for processing.
 - **CSV Output**: Parsed log entries are exported to a structured CSV format, facilitating analysis and further processing.
 
 - **Error Handling**: The script provides error handling to manage invalid user inputs and ensure smooth execution.
+
+### Planned Improvements for Next Version
+
+- **Adding More Message Codes and Descriptions**: Identify and incorporate additional message codes and their descriptions to improve the comprehensiveness of the log parsing process.
+
+- **Refining Unknown Columns**: Investigate the purpose and content of currently "unknown columns" in the CSV output and provide appropriate names and descriptions for better clarity.
+  
+- **complete support for all vc0 files** the runtime folder holds 6 different ".vc0" log files:
+
+| Log Name      | File Path                              |  
+|---------------|----------------------------------------|  
+| **events**        | /runtime/logs/log.events.vc0           |  
+| **admin**         | /runtime/logs/log.admin.vc0            |  
+| **access**        | /runtime/logs/log.access.vc0           |  
+| diagnosticlog | /runtime/logs/log.diagnosticlog.vc0    |  
+| policytrace   | /runtime/logs/log.policytrace.vc0      |  
+| sensorslog    | /runtime/logs/log.sensorslog.vc0       |  
+
+For now only the highlighted logs are featured in the parser
 
 ## Usage
 
