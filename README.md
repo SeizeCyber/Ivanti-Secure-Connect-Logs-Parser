@@ -1,4 +1,4 @@
-# Ivanti-Secure-Connect-Logs-Parser
+# Ivanti Secure Connect Logs Parser
 
 ![Ivanti Secure Connect Logs Parser Menu Preview](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/blob/9b90ce1c2fb0dccfaf8c4b5e1c89aa050cb436f3/Ivanti%20Secure%20Connect%20Logs%20Parser%20Menu%20Preview.png)
 
