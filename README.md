@@ -11,7 +11,8 @@ For example, the original ".vc0" logs hold the epoch timestamp inside a UID stri
 - **"uid__1707603496_3777_1555"** which after converstion will show this date and time: "10/02/2024 22:18:16".
   
 And a message like:  
-- **"AUT24326"**  which stands for "Log Auth Success".  
+- **"AUT24326"**  which stands for "Log Auth Success".
+
 This tool provides a user-friendly interface, allowing users to select the type of vc0 log (Admin, Events, or Access) for parsing.  
 It then prompts the user to choose a log file for processing.
 
