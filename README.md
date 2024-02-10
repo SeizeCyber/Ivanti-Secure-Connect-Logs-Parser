@@ -79,8 +79,4 @@ The un-featured logs will hopefully will be added in the next versions
 - Date Created: 09/02/2024
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/graphs/commit-activity)
-[![GitHub stars](https://img.shields.io/github/stars/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/issues)
-[![GitHub forks](https://img.shields.io/github/forks/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/network)
-[![GitHub contributors](https://img.shields.io/github/contributors/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/graphs/contributors)
+
