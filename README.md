@@ -1,4 +1,5 @@
 # Ivanti-Secure-Connect-Logs-Parser
+![Ivanti Secure Connect Logs Parser Menu Preview](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/blob/9b90ce1c2fb0dccfaf8c4b5e1c89aa050cb436f3/Ivanti%20Secure%20Connect%20Logs%20Parser%20Menu%20Preview.png)
 ## Overview
 
 The Ivanti Secure Connect Logs Parser is a PowerShell script designed to parse Ivanti Secure Connect runtime logs (in vc0 format) and convert them into a readable CSV format. This script provides a user-friendly menu selection interface, allowing users to choose the type of vc0 log (Admin, Events, or Access) they want to parse. It then prompts the user to select a log file for processing.
