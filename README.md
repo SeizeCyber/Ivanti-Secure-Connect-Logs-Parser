@@ -8,7 +8,7 @@ The Ivanti Secure Connect Logs Parser is a PowerShell script designed to parse I
 It converts various strings to ease the analysis efforts and converts them into a readable CSV format.  
   
 For example, the original ".vc0" logs hold the epoch timestamp inside a UID string like:  
-- **"uid__1707603496_1234_1234"** which after converstion will show this date and time: "10/02/2024 22:18:16".
+- **"uid__1707603496_1234_1234"** which after conversion will show this date and time: "10/02/2024 22:18:16".
   
 And a message like:  
 - **"AUT24326"**  which stands for "Log Auth Success".
@@ -18,34 +18,36 @@ It then prompts the user to choose a log file for processing.
 
 ## Features
 
-- **Log Type Selection Menu**: Users can choose the type of vc0 log they want to parse: Admin, Events, or Access logs.
+- :gear: **Log Type Selection Menu**: Users can choose the type of vc0 log they want to parse: Admin, Events, or Access logs.
   
-- **Epoch Timestamp Conversion**: The script identifies epoch timestamps in the vc0 log files and converts them into human-readable dates for better understanding.
+- :alarm_clock: **Epoch Timestamp Conversion**: The script identifies epoch timestamps in the vc0 log files and converts them into human-readable dates for better understanding.
 
-- **Message Code Descriptions**: Message codes in the logs are replaced with their corresponding descriptions, making it easier to interpret the log entries.
+- :label: **Message Code Descriptions**: Message codes in the logs are replaced with their corresponding descriptions, making it easier to interpret the log entries.
 
-- **CSV Output**: Parsed log entries are exported to a structured CSV format, facilitating analysis and further processing.
+- :page_with_curl: **CSV Output**: Parsed log entries are exported to a structured CSV format, facilitating analysis and further processing.
 
-- **Error Handling**: The script provides error handling to manage invalid user inputs and ensure smooth execution.
+- :warning: **Error Handling**: The script provides error handling to manage invalid user inputs and ensure smooth execution.
 
 ### Planned Improvements for Next Version
 
 - **Adding More Message Codes and Descriptions**: Identify and incorporate additional message codes and their descriptions to improve the comprehensiveness of the log parsing process.
+> For a comprehensive list of message codes and their descriptions, refer to the [Pulse Policy Secure Error Message Guide](https://help.ivanti.com/ps/legacy/PPS/9.1Rx/9.1R9/Pulse-Policy-Secure-Error-Message-Guide.pdf) provided by Ivanti.
+
 
 - **Refining Unknown Columns**: Investigate the purpose and content of currently "unknown columns" in the CSV output and provide appropriate names and descriptions for better clarity.
   
-- **complete support for all vc0 files** the runtime folder holds 6 different ".vc0" log files:
+- **Complete support for all vc0 files** the runtime folder holds 6 different ".vc0" log files:
 
-| Log Name      | File Path                              |  
-|---------------|----------------------------------------|  
-| **events**        | /runtime/logs/log.events.vc0           |  
-| **admin**         | /runtime/logs/log.admin.vc0            |  
-| **access**        | /runtime/logs/log.access.vc0           |  
-| diagnosticlog | /runtime/logs/log.diagnosticlog.vc0    |  
-| policytrace   | /runtime/logs/log.policytrace.vc0      |  
-| sensorslog    | /runtime/logs/log.sensorslog.vc0       |  
+| Log Name      | File Path                              | Featured ?
+|---------------|----------------------------------------|---------------|  
+| **events**        | **/runtime/logs/log.events.vc0**           | ✅        |  
+| **admin**         | **/runtime/logs/log.admin.vc0**            | ✅        |   
+| **access**        | **/runtime/logs/log.access.vc0**           | ✅        |  
+| diagnosticlog | /runtime/logs/log.diagnosticlog.vc0    | ❌        |  
+| policytrace   | /runtime/logs/log.policytrace.vc0      | ❌        |  
+| sensorslog    | /runtime/logs/log.sensorslog.vc0       | ❌        |   
 
-For now only the highlighted logs are featured in the parser
+The un-featured logs will hopefully will be added in the next versions
 
 ## Usage
 
@@ -66,12 +68,19 @@ For now only the highlighted logs are featured in the parser
 
 ## Requirements
 
-- PowerShell 3.0 or above
-- Administrator mode
-- Ivanti Secure Connect runtime logs in vc0 format
+- :heavy_check_mark: PowerShell 3.0 or above
+- :lock: Administrator mode
+- :file_folder: Ivanti Secure Connect runtime logs in vc0 format
 
 ## Author
 
 - Author: David Abrgel
 - Version: 1.0.0
 - Date Created: 09/02/2024
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/graphs/commit-activity)
+[![GitHub stars](https://img.shields.io/github/stars/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/issues)
+[![GitHub forks](https://img.shields.io/github/forks/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/network)
+[![GitHub contributors](https://img.shields.io/github/contributors/david-abrgel/Ivanti-Secure-Connect-Logs-Parser.svg)](https://github.com/david-abrgel/Ivanti-Secure-Connect-Logs-Parser/graphs/contributors)
