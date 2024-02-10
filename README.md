@@ -4,13 +4,16 @@
 
 ## Overview
 
-The Ivanti Secure Connect Logs Parser is a PowerShell script designed to parse Ivanti Secure Connect runtime logs (in vc0 format) and convert them into a readable CSV format. This tool provides a user-friendly interface, allowing users to select the type of vc0 log (Admin, Events, or Access) for parsing. It then prompts the user to choose a log file for processing.
+The Ivanti Secure Connect Logs Parser is a PowerShell script designed to parse Ivanti Secure Connect runtime logs (in vc0 format). 
+It converts various strings to ease the analysis efforts and converts them into a readable CSV format.
+For example, the original ".vc0" logs hold the epoch timestamp inside a UID string like "uid__1705385729_3766_1505" and a message like "AUT24326" that needs to be converted. This tool provides a user-friendly interface, 
+allowing users to select the type of vc0 log (Admin, Events, or Access) for parsing. It then prompts the user to choose a log file for processing.
 
 ## Features
 
 - **Log Type Selection Menu**: Users can choose the type of vc0 log they want to parse: Admin, Events, or Access logs.
   
-- **Epoch Timestamp Conversion**: The script identifies epoch timestamps in the log files and converts them into human-readable dates for better understanding.
+- **Epoch Timestamp Conversion**: The script identifies epoch timestamps in the vc0 log files and converts them into human-readable dates for better understanding.
 
 - **Message Code Descriptions**: Message codes in the logs are replaced with their corresponding descriptions, making it easier to interpret the log entries.
 
