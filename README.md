@@ -29,7 +29,7 @@ It then prompts the user to choose a log file for processing.
 - :warning: **Error Handling**: The script provides error handling to manage invalid user inputs and ensure smooth execution.
 
 ## Current Issues 
-- The script cant handle large vc0 that weights over 4-5 MB, this issue can be mitigated by first cleaning the file from excessive null bytes and splitting the file into small chunks.
+- The script cant handle large vc0 that weighing over 4-5 MB, this issue can be mitigated by first cleaning the file from excessive null bytes and splitting the file into small chunks.
   a built-in solution hopefully will be provided in the next versions.
   
 ### Planned Improvements for Next Version
