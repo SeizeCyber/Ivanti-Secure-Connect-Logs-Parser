@@ -25,6 +25,25 @@
 
 #>
 
+# Define the Clean-LogFile function to remove non-printable characters excluding tabs, spaces, and end-of-line characters
+function Clean-LogFile {
+    param (
+        [string]$InputFilePath,
+        [string]$OutputFilePath
+    )
+
+    # Read the content of the input file
+    $content = Get-Content -Path $InputFilePath -Raw
+
+    # Define a regular expression pattern to match non-printable characters excluding tabs, spaces, and end-of-line characters
+    $nonPrintablePattern = '[^\x09\x20-\x7E]'
+
+    # Replace non-printable characters with an empty string
+    $cleanedContent = $content -replace $nonPrintablePattern
+
+    # Write the cleaned content to the output file
+    $cleanedContent | Out-File -FilePath $OutputFilePath -Encoding utf8
+}
 
 # Menu selection for the type of vc0 log
 Write-Host "                                                                                       "
@@ -38,17 +57,30 @@ Write-Host "                                #                  Version: 1.0.0   
 Write-Host "                                #                                                     #" 
 Write-Host "                                #######################################################" 
 Write-Host "                                                                                       "
-Write-Host "                                Select the type of vc0 log:                            "
+Write-Host "                                Select the type of vc0 log:                            " -ForegroundColor Green
 Write-Host "                                                                                       "
 Write-Host "                                1. Admin                                               "
 Write-Host "                                2. Events                                              "
 Write-Host "                                3. Access                                              "
+Write-Host "                                4. Split and clean vc0 file weighing over 2 MB         " -ForegroundColor Yellow
 Write-Host "                                                                                       "
-$selection = Read-Host "Enter your choice (1, 2, or 3)"
+$selection = Read-Host "Enter your choice (1, 2, 3, or 4)"
 
 # Validate the selection
-if ($selection -notin '1', '2', '3') {
-    Write-Host "Invalid selection. Please choose 1, 2, or 3."
+if ($selection -notin '1', '2', '3', '4') {
+    Write-Host "Invalid selection. Please choose 1, 2, 3, or 4."
+    exit
+}
+
+# Prompt the user to select a file
+$fileDialog = [System.Windows.Forms.OpenFileDialog]@{
+    InitialDirectory = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Definition)
+    Title = 'Select a log file'
+}
+
+# Validate the selection
+if ($selection -notin '1', '2', '3', '4') {
+    Write-Host "Invalid selection. Please choose 1, 2, 3, or 4."
     exit
 }
 
@@ -63,12 +95,70 @@ switch ($selection) {
     '1' { $fileDialog.Filter = 'Admin logs (*.admin.vc0)|*.admin.vc0|All files (*.*)|*.*' }
     '2' { $fileDialog.Filter = 'Events logs (*.events.vc0)|*.events.vc0|All files (*.*)|*.*' }
     '3' { $fileDialog.Filter = 'Access logs (*.access.vc0)|*.access.vc0|All files (*.*)|*.*' }
+    '4' { 
+if ($selection -eq '4') {
+    # Prompt the user to select a file
+    $fileDialog = [System.Windows.Forms.OpenFileDialog]@{
+        InitialDirectory = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Definition)
+        Title = 'Select a log file'
+    }
+
+    $result = $fileDialog.ShowDialog()
+
+    if ($result -eq 'OK') {
+        $logFilePath = $fileDialog.FileName
+        $outputDirectory = Join-Path -Path $PSScriptRoot -ChildPath "tmp_split_vc0"
+        if (-not (Test-Path $outputDirectory)) {
+            New-Item -Path $outputDirectory -ItemType Directory | Out-Null
+        }
+        $outputFilePath = Join-Path -Path $outputDirectory -ChildPath "cleaned_tmp.vc0"
+
+        # Clean the selected log file
+        Clean-LogFile -InputFilePath $logFilePath -OutputFilePath $outputFilePath
+
+        $fileSize = (Get-Item $outputFilePath).Length / 1MB
+
+        if ($fileSize -le 2) {
+            Write-Host "The selected file is already under 2 MB. No need to split."
+            $selection = '0'
+        } else {
+            # Calculate the number of parts needed
+            $numParts = [math]::Ceiling($fileSize / 2)
+            Write-Host "Splitting the file into $numParts parts..."
+
+# Split the file into parts
+for ($i = 0; $i -lt $numParts; $i++) {
+    $start = $i * $partSize
+    $end = [math]::Min(($i + 1) * $partSize, $fileContent.Length)
+    $partContent = $fileContent.Substring($start, $end - $start)
+
+    # Extract the original file name without extension
+    $originalFileName = [System.IO.Path]::GetFileNameWithoutExtension($logFilePath)
+
+    # Construct the part file name
+    $partFileName = "part$($i + 1)_${originalFileName}.vc0"
+
+    $partPath = Join-Path -Path $outputDirectory -ChildPath $partFileName
+    $partContent | Out-File -FilePath $partPath -Encoding utf8
+}
+
+            Write-Host "File split completed. Parts saved in $outputDirectory"
+        }
+    } else {
+        Write-Host "Operation canceled by the user."
+        $selection = '0'
+    }
+    
+    # Return to the menu
+    return
+}
+
+    }
     default {
-        Write-Host "Invalid selection. Please choose 1, 2, or 3."
+        Write-Host "Invalid selection. Please choose 1, 2, 3, or 4."
         exit
     }
 }
-
 $result = $fileDialog.ShowDialog()
 
 if ($result -eq 'OK') {
@@ -101,12 +191,8 @@ if ($result -eq 'OK') {
     }
 
     # Define the regex pattern for finding the epoch timestamp in the uid string
-    $uidRegexPattern = 'uid__(\d+)_\w+_'
+    $EpochRegexPattern = '_(17\d+)_'
     $startOfLineRegexPattern = '^((65a\w+\.\w+)|(65b\w+\.\w+))'
-
-    # Construct the output file path
-    $outputFileName = [System.IO.Path]::GetFileNameWithoutExtension($logFilePath) + "_parsed.txt"
-    $outputFilePath = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($logFilePath), $outputFileName)
 
     # Initialize progress counter for the loop
     $processedLines = 0
@@ -116,7 +202,7 @@ if ($result -eq 'OK') {
 
     # Hashtable to map message codes to descriptions
     $messageCodeDescriptions = @{
-        "WEB31809" = "UnOfficial - Web API Request"
+        "WEB31809" = "Un-Official - Web API Request"
         "AUT24326" = "Log Auth Success"
         "AUT32051" = "Mode changed to SSL"
         "AUT23278" = "RealmRestrictionsPassed"
@@ -171,10 +257,40 @@ if ($result -eq 'OK') {
         "ADM24205" = "Successfully exported configuration in XML to file"
         "ADM20655" = "Time zone changed"
         "ADM20640" = "Shutdown Server From Console"
-        "ADM31101" = "UnOfficial - Outgoing Traffic connection with IP and PORT"
+        "ADM31101" = "Un-Official - Outgoing Traffic connection with IP and PORT"
         "ADM22820" = "Admin Idle Timeout By Request"
         "AUT30615" = "Admin Realm Restrictions Failed"
         "STS20641" = "Number of concurrent users logged in to the device"
+        "ARC31800" = "Un-Official - Failed to upload file - Invalid Access key"
+        "STS30667" = "Statistics - Number of NPC connections"
+        "SYS32039" = "New files were found with the Internal Integrity Check Tool."
+        "SYS32040" = "A modified file was found with the Internal Integrity Check Tool."
+        "SYS32041" = "The Integrity Check Tool manifest file is missing."
+        "SYS32042" = "The Integrity Checker Tool manifest file is bad."
+        "SYS32087" = "A built-in integrity scan has started."
+        "SYS32088" = "A built-in integrity scan has been completed."
+        "SYS10306" = "System status - Starting services"
+        "SYS32083" = "LMDB shards usage stats shard"
+        "SYS31212" = "Un-Official - Certificate related log"
+        "SYS31211" = "Un-Official - Certificate is about to expire"
+        "LIC31493" = " Pulse Cloud Licensing Service - Heartbeat"
+        "STS20142" = "Archived Statistics"
+        "LIC10291" = "License Activated"
+        "ARC24529" = "Skipping Archive"
+        "LIC31494" = "Un-Official - License Heartbeat response"
+        "LIC31495" = "Un-Official - License Related Log"
+        "NET24463" = "Internal Interface UP"
+        "NET24467" = "Internal Gateway Up"
+        "NET24465" = "External Interface Up"
+        "AUT32105" = "Un-Official - Retrieved all active sessions"
+        "NET24469" = "External Gateway Up"
+        "ADM22883" = "Site Minder server: Caches flushed."
+        "SYS20413" = "Boot Success"
+        "SYS20412" = "Booted - System started"
+        "SYS10020" = "Excessive Write Tries Changes"
+        "SYS10298" = "Server Reboot"
+        "SYS10299" = "Server shutdown"
+        "SYS31256" = "Un-Official - dsserver related log"
 
     }
 
@@ -190,7 +306,7 @@ if ($result -eq 'OK') {
 
         # Check if the line starts with the specified pattern
         if ($line -match $startOfLineRegexPattern) {
-            $matches = [regex]::Matches($line, $uidRegexPattern)
+            $matches = [regex]::Matches($line, $EpochRegexPattern)
             foreach ($match in $matches) {
                 $epochTimestamp = $match.Groups[1].Value
                 $convertedTimestamp = (Get-Date (Get-Date "1970-01-01 00:00:00").AddSeconds($epochTimestamp)).ToString("yyyy-MM-dd HH:mm:ss")
@@ -292,5 +408,3 @@ Write-Host "Log file parsed and converted to CSV format. Result saved to: $outpu
  else {
     Write-Host "Operation canceled by the user."
 }
-
-
