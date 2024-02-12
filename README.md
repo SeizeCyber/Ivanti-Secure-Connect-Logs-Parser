@@ -1,6 +1,8 @@
 # Ivanti Secure Connect Logs Parser
 
-![image](https://github.com/SeizeCyber/Ivanti-Secure-Connect-Logs-Parser/assets/42407252/54b81250-4908-422f-955f-01a2645441a8)
+![image](https://github.com/SeizeCyber/Ivanti-Secure-Connect-Logs-Parser/assets/42407252/5a6569c9-3a9c-46f1-9d4a-2dd7ffdf7b78)
+
+
 
 
 ## Overview
