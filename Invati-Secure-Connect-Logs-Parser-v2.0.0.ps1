@@ -59,22 +59,16 @@ if ($selection -notin '1', '2', '3', '4', '5', '6') {
     exit
 }
 
-# Prompt the user to select a file
-$fileDialog = [System.Windows.Forms.OpenFileDialog]@{
-    InitialDirectory = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Definition)
-    Title = 'Select a log file'
-}
+# Prompt the user to select a file using OpenFileDialog
+Add-Type -AssemblyName System.Windows.Forms
+$fileDialog = New-Object System.Windows.Forms.OpenFileDialog
+$fileDialog.InitialDirectory = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Definition)
+$fileDialog.Title = 'Select a log file'
 
 # Validate the selection
 if ($selection -notin '1', '2', '3', '4', '5', '6') {
     Write-Host "Invalid selection. Please choose 1, 2, 3, 4, 5 or 6"
     exit
-}
-
-# Prompt the user to select a file
-$fileDialog = [System.Windows.Forms.OpenFileDialog]@{
-    InitialDirectory = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Definition)
-    Title = 'Select a log file'
 }
 
 # Define file filter based on the user's selection
@@ -85,14 +79,18 @@ switch ($selection) {
     '4' { $fileDialog.Filter = 'Diagnostic logs (*.diagnosticlog.vc0;*.diagnosticlog.vc0.old)|*.diagnosticlog.vc0;*.diagnosticlog.vc0.old|All files (*.*)|*.*' }
     '5' { $fileDialog.Filter = 'Sensor log (*.sensorslog.vc0;*.sensorslog.vc0.old)|*.sensorslog.vc0;*.sensorslog.vc0.old|All files (*.*)|*.*' }
     '6' { $fileDialog.Filter = 'Policy trace (*.policytrace.vc0;*.policytrace.vc0.old)|*.policytrace.vc0;*.policytrace.vc0.old|All files (*.*)|*.*' }
-
-
-    default {
-        Write-Host "Invalid selection. Please choose 1, 2, 3"
-        exit
-    }
 }
+
+# Show the file dialog and get the result
 $result = $fileDialog.ShowDialog()
+
+if ($result -ne 'OK') {
+    Write-Host "Operation canceled by the user."
+    exit
+}
+
+# Get the selected file path
+$logFilePath = $fileDialog.FileName
 
 if ($result -eq 'OK') {
     $logFilePath = $fileDialog.FileName
