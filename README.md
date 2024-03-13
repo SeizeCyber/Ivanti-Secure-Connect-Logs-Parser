@@ -1,6 +1,7 @@
-# Ivanti Secure Connect Logs Parser
+# Ivanti Secure Connect Logs Parser v2.0.0.0
 
-![image](https://github.com/SeizeCyber/Ivanti-Secure-Connect-Logs-Parser/assets/42407252/5a6569c9-3a9c-46f1-9d4a-2dd7ffdf7b78)
+![Ivanti-Secure-Connect-Logs-Parser-v2](https://github.com/SeizeCyber/Ivanti-Secure-Connect-Logs-Parser/assets/42407252/6424f7e1-c48c-4a8a-ae54-c57d9bb21705)
+
 
 
 
@@ -10,8 +11,8 @@
 The Ivanti Secure Connect Logs Parser is a PowerShell script designed to parse Ivanti Secure Connect runtime logs (in vc0 format).  
 It converts various strings to ease the analysis efforts and converts them into a readable CSV format.  
   
-For example, the original ".vc0" logs hold the epoch timestamp inside a UID string like:  
-- **"uid__1707603496_1234_1234"** which after conversion will show this date and time: "10/02/2024 22:18:16".
+For example, the original ".vc0" logs hold the epoch timestamp in base16 in the start of line befor the dot:  
+- **"65f221e0.07357a"** which after conversion will show this date and time: "2024-3-13 22:00:00".
   
 And a message like:  
 - **"AUT24326"**  which stands for "Log Auth Success".
@@ -31,9 +32,9 @@ It then prompts the user to choose a log file for processing.
 
 - :warning: **Error Handling**: The script provides error handling to manage invalid user inputs and ensure smooth execution.
 
-## Current Issues 
-- The script cant handle large vc0 file that weighing over 2 MB very well due to memory handeling issues,
-  to address this problem a 4th option was added to the menu to clean and split large vc0 file.
+## Solved Issues Issues in Version 2.0.0
+- The script **can** handle large vc0 files battle-tested for files weighing between 300MB-500MB very well due to a 7-step proceesing,
+  which is utilizing the .NET function of file streaming and using a buffer with "chunk" method.
   
 ### Planned Improvements for Next Version
 
@@ -50,9 +51,9 @@ It then prompts the user to choose a log file for processing.
 | **events**        | **/runtime/logs/log.events.vc0**           | ✅        |  
 | **admin**         | **/runtime/logs/log.admin.vc0**            | ✅        |   
 | **access**        | **/runtime/logs/log.access.vc0**           | ✅        |  
-| diagnosticlog | /runtime/logs/log.diagnosticlog.vc0    | ❌        |  
-| policytrace   | /runtime/logs/log.policytrace.vc0      | ❌        |  
-| sensorslog    | /runtime/logs/log.sensorslog.vc0       | ❌        |   
+| diagnosticlog | /runtime/logs/log.diagnosticlog.vc0    | ✅         |  
+| policytrace   | /runtime/logs/log.policytrace.vc0      | ✅         |  
+| sensorslog    | /runtime/logs/log.sensorslog.vc0       | ✅        |   
 
 The un-featured logs will hopefully will be added in the next versions
 
