@@ -76,9 +76,11 @@ With an expanded database containing over 8,000 message codes sourced from the l
 
 ## Requirements
 
+- Running with PowerShell ISE to support .NET open file dialog
 - :heavy_check_mark: PowerShell 3.0 or above
 - :lock: Administrator mode
 - :file_folder: Ivanti Secure Connect runtime logs in vc0 format
+
 
 ## Author
 
