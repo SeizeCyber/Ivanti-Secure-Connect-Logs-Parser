@@ -32,9 +32,6 @@ It then prompts the user to choose a log file for processing.
 
 - :warning: **Error Handling**: The script provides error handling to manage invalid user inputs and ensure smooth execution.
 
-## Solved Issues Issues in Version 2.0.0
-- The script **can** handle large vc0 files battle-tested for files weighing between 300MB-500MB very well due to a 7-step proceesing,
-  which is utilizing the .NET function of file streaming and using a buffer with "chunk" method.
   
 ### Improvements Added In Version 2.0.0
 - **Support and Enhanced Performance for Large Files:**
@@ -59,7 +56,6 @@ With an expanded database containing over 8,000 message codes sourced from the l
 | policytrace   | /runtime/logs/log.policytrace.vc0      | ✅         |  
 | sensorslog    | /runtime/logs/log.sensorslog.vc0       | ✅        |   
 
-The un-featured logs will hopefully will be added in the next versions
 
 ## Usage
 
