@@ -36,13 +36,17 @@ It then prompts the user to choose a log file for processing.
 - The script **can** handle large vc0 files battle-tested for files weighing between 300MB-500MB very well due to a 7-step proceesing,
   which is utilizing the .NET function of file streaming and using a buffer with "chunk" method.
   
-### Planned Improvements for Next Version
+### Improvements Added In Version 2.0.0
+- **Support and Enhanced Performance for Large Files:**
+The parser has undergone rigorous testing and optimization to handle large vc0 log files efficiently. It has been battle-tested on files weighing between 300-500 MB, ensuring reliable processing even with extensive data volumes,
+this was achieved by building a 7-step process that relies on writing log files into temporary files on disk utilizing the file stream function in .NET and using the buffering support to gain a faster and more stable parser flow.
 
-- **Adding More Message Codes and Descriptions**: Identify and incorporate additional message codes and their descriptions to improve the comprehensiveness of the log parsing process.
+-**Improved Message Code Conversion:** 
+With an expanded database containing over 8,000 message codes sourced from the latest "ive.msgs" dataset, the parser offers enhanced accuracy and comprehensiveness in converting message codes to their respective descriptions and categories.
 > For a comprehensive list of message codes and their descriptions, refer to the [Pulse Policy Secure Error Message Guide](https://help.ivanti.com/ps/legacy/PPS/9.1Rx/9.1R9/Pulse-Policy-Secure-Error-Message-Guide.pdf) provided by Ivanti.
 
 
-- **Refining Unknown Columns**: Investigate the purpose and content of currently "unknown columns" in the CSV output and provide appropriate names and descriptions for better clarity.
+- **Stabilized CSV Column Names**: Additional Column names were added to clarify the purpose of the various fields, for the versatile fields it was changed to “msg data” and a number.
   
 - **Complete support for all vc0 files** the runtime folder holds 6 different ".vc0" log files:
 
@@ -69,10 +73,10 @@ The un-featured logs will hopefully will be added in the next versions
    - Select the specific log file you want to process.
 
 4. **Wait for Processing**:
-   - The script will automatically parse the log file and convert it into a CSV format.
+   - The script will automatically parse the log file and will ask  if a convesion into a CSV format is wanted.
 
 5. **View Results**:
-   - Once completed, the parsed log data will be saved to a CSV file, ready for viewing and analysis.
+   - Once completed, the parsed log data will be saved to a TXT or CSV file based on your choice, ready for viewing and analysis.
 
 ## Requirements
 
