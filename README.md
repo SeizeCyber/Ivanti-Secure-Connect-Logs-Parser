@@ -83,8 +83,9 @@ The un-featured logs will hopefully will be added in the next versions
 ## Author
 
 - Author: David Abrgel
-- Version: 1.0.0
+- Version: 2.0.0
 - Date Created: 09/02/2024
+- Update Release Date: 13/03/2023
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
