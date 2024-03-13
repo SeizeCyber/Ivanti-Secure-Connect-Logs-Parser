@@ -1,4 +1,4 @@
-# Ivanti Secure Connect Logs Parser v2.0.0.0
+# Ivanti Secure Connect Logs Parser v2.0.0
 
 ![Ivanti-Secure-Connect-Logs-Parser-v2](https://github.com/SeizeCyber/Ivanti-Secure-Connect-Logs-Parser/assets/42407252/6424f7e1-c48c-4a8a-ae54-c57d9bb21705)
 
