@@ -87,7 +87,7 @@ With an expanded database containing over 8,000 message codes sourced from the l
 - Author: David Abrgel
 - Version: 2.0.0
 - Date Created: 09/02/2024
-- Update Release Date: 13/03/2023
+- Update Release Date: 13/03/2024
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
